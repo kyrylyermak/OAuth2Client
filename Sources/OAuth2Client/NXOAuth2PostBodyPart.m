@@ -43,6 +43,7 @@
     } else if ([content isKindOfClass:[NSData class]]) {
         return [self initWithName:name dataContent:content];
     } else if ([content isKindOfClass:[NXOAuth2FileStreamWrapper class]]) {
+        NXOAuth2FileStreamWrapper *content = content;
         return [self initWithName:name streamContent:[content stream] streamLength:[content contentLength] fileName:[content fileName] contentType:[content contentType]];
     } else {
         NSAssert1(NO, @"NXOAuth2PostBodyPart with illegal type:\n%@", [content class]);
