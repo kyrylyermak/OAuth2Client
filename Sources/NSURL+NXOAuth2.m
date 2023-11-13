@@ -41,7 +41,7 @@
     //for instance Google API redirect url may look like urn:ietf:wg:oauth:2.0:oob
     //NSURL requires a valid scheme or query will return nil
     NSString *absoluteString = self.absoluteString;
-    if ([absoluteString rangeOfString:@"://"].location == NSNotFound) {
+    if (![absoluteString containsString:@"urn"] && [absoluteString rangeOfString:@"://"].location == NSNotFound) {
         absoluteString = [NSString stringWithFormat:@"http://%@", absoluteString];
     }    
     NSURL *qualifiedURL = [NSURL URLWithString:absoluteString];
