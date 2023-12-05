@@ -43,12 +43,29 @@
     NSString *absoluteString = self.absoluteString;
     if (![absoluteString containsString:@"urn"] && [absoluteString rangeOfString:@"://"].location == NSNotFound) {
         absoluteString = [NSString stringWithFormat:@"http://%@", absoluteString];
-    }    
-    NSURL *qualifiedURL = [NSURL URLWithString:absoluteString];
+    }
+    NSURLComponents *urlComponents = [NSURLComponents componentsWithString: absoluteString];
+      
+      NSArray *queryItems = urlComponents.queryItems;
+      for (NSURLQueryItem *item in queryItems) {
+          if ([item.name isEqualToString:@"code"]) {
+              NSString *codeValue = item.value;
+              return codeValue;
+              break;
+          }
+      }
     
-    NSString *queryString = [qualifiedURL query];
-    NSDictionary *parameters = [queryString nxoauth2_parametersFromEncodedQueryString];
-    return [parameters objectForKey:key];
+//    if ([absoluteString rangeOfString:@"://"].location == NSNotFound) {
+//        absoluteString = [NSString stringWithFormat:@"http://%@", absoluteString];
+//    }
+//    NSURL *qualifiedURL = [NSURL URLWithString:absoluteString];
+//    URLWithString:absoluteString];
+//    NSURL *qualifiedURL = [NSURL URLWithString:absoluteString encodingInvalidCharacters:NO];//URLWithString:absoluteString];
+//
+//    NSString *queryString = [qualifiedURL query];
+//    NSDictionary *parameters = [queryString nxoauth2_parametersFromEncodedQueryString];
+   // return [parameters objectForKey:key];
+    return nil;
 }
 
 - (NSURL *)nxoauth2_URLWithoutQueryString;
